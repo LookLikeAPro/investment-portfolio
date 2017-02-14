@@ -22,6 +22,7 @@ def simulate(strategy_name, **kwargs):
   context = Context()
   environment = Environment()
   environment._date = datetime.datetime(2016,7,1)
+  environment._start_date = datetime.datetime(2016,7,1)
   strat.initialize(context, environment)
   for i in range(100):
     environment._advance_date()

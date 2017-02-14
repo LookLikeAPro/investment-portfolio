@@ -8,6 +8,12 @@ matplotlib
 future
 pandas
 pandas_datareader
-isbday
 PyYAML
+```
+
+References
+
+```
+quandl
+zipline
 ```
