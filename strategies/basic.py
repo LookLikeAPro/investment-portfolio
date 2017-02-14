@@ -9,7 +9,9 @@ def rebalance(context, environment):
     return
   context.date = environment.date
   # print context
-  print "today: " + str(environment.get_stock("AAPL")["Open"][-1:])
+  print(
+     str(environment.get_stock("AAPL").index[-1:][0]) + ": " + str(environment.get_stock("AAPL")["Open"][-1:][0])
+  )
   environment.buy("AAPL", 0.01)
   # import matplotlib.pyplot as plt
   # environment.get_stock("AAPL")["Open"].plot()

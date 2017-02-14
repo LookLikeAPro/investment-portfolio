@@ -19,12 +19,12 @@ class Environment:
     self._date = self._date + datetime.timedelta(days=1)
   def get_stock(self, symbol):
     stock = get_stock(symbol)
-    return stock.ix[datetime.datetime(1970,1,1):self.date]
+    return stock.ix[:self.date]
   @property
   def value(self):
     total = self.cash
     for holding in self.holdings:
-      stock_price = get_stock(holding).ix[datetime.datetime(1970,1,1):self.date]["Open"][-1:][0]
+      stock_price = get_stock(holding).ix[:self.date]["Open"][-1:][0]
       total += stock_price*self.holdings[holding]
     return total
   def buy(self, symbol, amount):
