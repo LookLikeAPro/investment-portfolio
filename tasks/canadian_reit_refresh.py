@@ -1,11 +1,11 @@
-import sys
-sys.path.append("..")
+import sys, os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from src import startup
-
 from src.datasource import get_stock
-from src import constants
+from src.constants import get_constant
 
-reit_symbols = constants.get_constant("canadian_reits")
+reit_symbols = get_constant("canadian_reits")
 
 for reit_symbol in reit_symbols:
   print("GET " + reit_symbol)
