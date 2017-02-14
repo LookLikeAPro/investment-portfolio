@@ -11,7 +11,7 @@ def get_csv_path(symbol):
 # db = sqlalchemy.create_engine('sqlite:///test.db')
 # db.echo = False
 
-def get_stock(symbol, **kwargs):
+def _get_stock(symbol, **kwargs):
   # global db
   if "back_interval" in kwargs:
     start = datetime.date.today() - datetime.timedelta(days=kwargs["back_interval"])
@@ -30,6 +30,13 @@ def get_stock(symbol, **kwargs):
     # stock.to_sql(table_name, db, if_exists="replace")
     stock.to_csv(get_csv_path(symbol))
     return stock
+
+cache = {}
+
+def get_stock(symbol, **kwargs):
+  if not symbol in cache:
+    cache[symbol] = _get_stock(symbol, **kwargs)
+  return cache[symbol]
 
 # TODO CONCATENATION AND UPDATE
 # msft = msft.ix[datetime.datetime(2016,1,1):datetime.date.today()]

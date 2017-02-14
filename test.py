@@ -54,17 +54,6 @@ apple = apple.ix[datetime.datetime(2016,1,1):datetime.date.today()]
 # stock_change = stocks.apply(lambda x: np.log(x) - np.log(x.shift(1))) # shift moves dates back by 1.
 # stock_change.plot(grid = True).axhline(y = 0, color = "black", lw = 2)
 
-apple['MA'] = apple["Adj Close"].rolling(window=20).mean()
-apple['MA'].plot()
-apple['sMA'] = apple["Adj Close"].rolling(window=10).mean()
-apple['sMA'].plot()
-apple['Adj Close'].plot()
-
-plt.show()
-
-
-
-
 # apple["Adj Close"].plot(grid = True)
 # close_px = apple['Adj Close']
 # close_px.plot(label='AAPL')

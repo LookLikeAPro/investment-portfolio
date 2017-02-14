@@ -24,5 +24,30 @@ import pandas as pd
 # plt.show()
 
 
-# def run_strategy(s):
-  
+from src.environment import Environment
+
+def import_strategy(strategy_name):
+  from importlib import import_module
+  try:
+    strategy = import_module(strategy_name, __package__)
+    return strategy
+  except:
+    raise("unable to load strategy")
+
+class Context:
+  pass
+
+def simulate(strategy_name, **kwargs):
+  start = kwargs.get("start", datetime.datetime(1970,1,1))
+  end = kwargs.get("end", datetime.date.today())
+  strat = import_strategy(strategy_name)
+  context = Context()
+  environment = Environment()
+  environment._date = datetime.datetime(2016,7,1)
+  strat.initialize(context, environment)
+  for i in range(100):
+    environment._advance_date()
+    strat.rebalance(context, environment)
+  strat.end(context, environment)
+
+simulate("test1")
