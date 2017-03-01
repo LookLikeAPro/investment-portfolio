@@ -23,4 +23,4 @@ import pandas as pd
 
 from src.simulator import simulate
 
-simulate("strategies.basic")
+simulate("strategies.graph")

@@ -5,29 +5,30 @@ def initialize(context, environment):
   context.date = environment.date
   context.begin_date = environment.date
 
-values = []
-dates = []
+stock = "D-UN.TO"
 
 def rebalance(context, environment):
-  if context.date + datetime.timedelta(days=1) > environment.get_stock("AAPL").index[-1:][0]:
+  if not len(environment.get_stock(stock)):
+    return
+  if context.date + datetime.timedelta(days=1) > environment.get_stock(stock).index[-1:][0]:
     return
   context.date = environment.date
-  # print context
   print(
-     str(environment.get_stock("AAPL").index[-1:][0]) + ": " + str(environment.get_stock("AAPL")["Adj Close"][-1:][0])
+     str(environment.get_stock(stock).index[-1:][0]) + ": " + str(environment.get_stock(stock)["Close"][-1:][0])
   )
-  environment.buy("AAPL", 0.01)
-  values.append(environment.value)
-  dates.append(environment.date)
+  environment.buy(stock, 0.005)
 
 import pandas as pd
 
 def end(context, environment):
   print environment
-  apple = environment.get_stock("AAPL")
+  # print environment.transactions
+  apple = environment.get_stock(stock)
   apple_returns = apple["Adj Close"] / apple["Adj Close"][0]
   import matplotlib.pyplot as plt
-  portfolio = pd.DataFrame({"value": values}, index=dates)
-  combined = pd.DataFrame({"apple": portfolio["value"], "portfolio": apple_returns})
+  x = environment.value_over_time
+  y = x.index.intersection(apple.index)
+  z = x.ix[y]
+  combined = pd.DataFrame({"value": z["value"], "stock": apple_returns})
   combined.plot()
   plt.show()
